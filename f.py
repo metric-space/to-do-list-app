@@ -2,14 +2,26 @@ import os
 import os.path
 import sqlite3
 
+from shutil import rmtree
+
 class file_stuff(object):
 
 	name = 'to-do-list'
 
-	def __init__(self):
+	def __init__(self,test_override=None):
+
+		# ---- TEST MODE START ------------------------
+		# --- this small part only applies for a test-mode
+		if test_override:
+			self.name = self.name+"-test"
+
+		#~~~~~~~~~END OF TEST MODE ~~~~~~~~~~~~~~~~~~~~~~~
+
+
 		# -- move to home directory
 		egg = os.path.expanduser('~')
 		os.chdir(egg)
+
 
 		#check to see if a specific directory exits if not create one and create a new databse inside
 
@@ -39,7 +51,10 @@ class file_stuff(object):
 
 		print " I am sooo coooooooold ....-sad piano music plays-"
 	
-
+	def clean_up(self):
+		egg = os.path.expanduser('~')
+		os.chdir(egg)
+		rmtree(self.name)
 
 class database_avatar(object):
 
@@ -50,7 +65,7 @@ class database_avatar(object):
 
 	'''
 
-	schema = "create table  %s (id integer primary key autoincrement,note text) "
+	schema = "create table  %s (id integer primary key ,note text) "
 
 	def __init__(self,cursor):
 		self.cursor = cursor
@@ -76,8 +91,8 @@ class database_avatar(object):
 		self.cursor.execute("select * from %s " %self.table)
 		return self.cursor.fetchall()
 	
-	def insert(self,what):
-		self.cursor.execute("insert into %s (note) values (\'%s\')" %(self.table,what))
+	def insert(self,id,what):
+		self.cursor.execute("insert into %s (id,note) values (%d,\'%s\')" %(self.table,id,what))
 
 	def update(self,id,what):
 		try:
@@ -90,14 +105,35 @@ class database_avatar(object):
 
 
 if __name__ == '__main__':
+	try:
+		print " ---Start of test mode --- "
+		egg = file_stuff(test_override='Yes')
+		egg2 = egg.hand_me_the_cursor()
 
-	print " Start of test "
-	egg = file_stuff()
-	egg2 = egg.hand_me_the_cursor()
+		mario = database_avatar(egg2)
 
-	mario = database_avatar(egg2)
-	print mario.list_contents()
-	mario.update(2,"chicken")
-	print mario.list_contents()
-	egg.delete_me()
+		test_list = [(1,"idiots"),(2,"eat zombie brains"),(3,"get 100 cans of poop")]
 
+		for i in test_list:
+			mario.insert(i[0],i[1])
+	
+		print " db output : ",mario.list_contents()
+		print " db input :  ",test_list,"\n\n"
+
+		assert mario.list_contents() == test_list 
+
+		mario.update(2,"buy chicken")
+		
+		test_list[1] =(2,"buy chicken")
+
+		print " db output : ",mario.list_contents()
+		print " db input :  ",test_list
+
+		assert mario.list_contents() == test_list
+
+		print "---end-of-test---- \n\n"
+
+	finally:
+		print "finishing up"
+		egg.delete_me()
+		egg.clean_up()
