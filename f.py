@@ -34,7 +34,7 @@ class file_stuff(object):
 
 	def delete_me(self):
 		if self.db_stuff:
-			self.db.commit()
+			self.db_stuff.commit()
 			self.db_stuff.close()
 
 		print " I am sooo coooooooold ....-sad piano music plays-"
@@ -80,7 +80,10 @@ class database_avatar(object):
 		self.cursor.execute("insert into %s (note) values (\'%s\')" %(self.table,what))
 
 	def update(self,id,what):
-		self.cursor.execute("update %s set note=\'%s\' where id=%d" %(self.table,what,id))
+		try:
+			self.cursor.execute("update %s set note=\'%s\' where id=%d" %(self.table,what,id))
+		except:
+			print "something went wrong with the update button"
 
 	def delete(self,id):
 		self.cursor.execute("delete from %s where id = %d" %(self.table,id))
@@ -88,10 +91,13 @@ class database_avatar(object):
 
 if __name__ == '__main__':
 
+	print " Start of test "
 	egg = file_stuff()
 	egg2 = egg.hand_me_the_cursor()
 
 	mario = database_avatar(egg2)
-	print mario.list_tables()
+	print mario.list_contents()
+	mario.update(2,"chicken")
+	print mario.list_contents()
 	egg.delete_me()
 
