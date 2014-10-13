@@ -35,10 +35,10 @@ class Form(QDialog):
 			egg[0] = text
 			egg[1].setText(text)
 			self.chosen = None
-			print "debug : %s " %self.inner_list
 		else:
 			egg = QListWidgetItem(self.listBr)
-			self.inner_list[len(self.inner_list)]=[text,egg]
+			id = self.generate_unique_id()
+			self.inner_list[id]=[text,egg]
 			egg.setText(text)
 			egg.setTextColor(Qt.blue)
 			self.listBr.addItem(egg)
@@ -66,32 +66,59 @@ class Form(QDialog):
 			try:
 				counter = 0
 				print list
-				for item in list.values():
+				for i in list.keys():
 					# for the time being I am assuming the list consists of strings
+					item = list[i]
+
 					egg = QListWidgetItem(self.listBr)
 					egg.setText(item)
 					egg.setTextColor(Qt.blue)
 					self.listBr.addItem(egg)
-					self.inner_list[counter]=[item,egg]
-					counter+=1
+					self.inner_list[i]=[item,egg]
 			except:
 				print "something wrong happened"
 				pass
 
 
 	def generate_content(self):
-		egg = []
+		
+		result = {}
 		for i in self.inner_list:
-			egg.append(self.inner_list[i][0])
-		return egg
+			result[i] = self.inner_list[i][0]
+		return result
 
 	def set_external_function(self,f):
 		self.external_function=f
 
+	def generate_unique_id(self):
+
+		no_ = self.inner_list.keys()
+		trial_no = len(no_)
+		while ( trial_no in no_):
+			trial_no+=1
+
+		return trial_no
+
+
+def test_function():
+	assert form.generate_content()[0] == "homer"
+	print "passed assertion"
+	print "end of test"
+
+
 if __name__=='__main__':
+
+	print " Gui testing starts now"
 	app = QApplication(sys.argv)
 	form = Form()
-	form.populate(["Luke","likes","girls","but","is","too"])
+
+	form.populate({0:"fuck",1:"non-programmers",2:"machines",3:"rule"})
+
+	form.set_external_function(test_function)
+
+	print "please update 0 to 'homer' "
+
+	 
 	form.show()
 	app.exec_()
 
