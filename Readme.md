@@ -46,11 +46,11 @@ Frontend : PyQT4 ( no real reason for choosing this GUI framework(library?))
                                                                  |
                                                                  |
             ______________________________________               |
-	   |                                     |    init       |   
-	   |  class Name: database_avatar        |<--------------
-	   |                                     |
-	   |   Responsibilities: create tables   |
-	   |                     insert entry    |<--(id,entry)------------
+           |                                     |    init       |   
+           |  class Name: database_avatar        |<-------------- 
+           |                                     |
+           |   Responsibilities: create tables   |
+           |                     insert entry    |<--(id,entry)------------
        |---|                     update entry    |<--(id,entry)----------
        |   |                     delete entry    |
        |   |                     list tables     |
