@@ -50,33 +50,33 @@ Frontend : PyQT4 ( no real reason for choosing this GUI framework(library?))
            |  class Name: database_avatar        |<-------------- 
            |                                     |
            |   Responsibilities: create tables   |
-           |                     insert entry    |<--(id,entry)------------
-       |---|                     update entry    |<--(id,entry)----------
-       |   |                     delete entry    |
-       |   |                     list tables     |
-       |   |                     list entries    |--->list of tuples----|
-       |   |_____________________________________|                      |
-       |                                                                |
-       |                                                                |
-       |   _______________________________________
-       |   |                                     |
-       |   |  class Name: Form                   |
-       |   |                                     |
-       |---|  Responsibilities: UI creation      |
-       |   |                    onscreen update  |
-       |   |       display db contents on screen |
-       |   |             provide an updated list |--->dictionary--
-       |   |                        event driver |
-       |   |_____________________________________|
- init  |
-       V
-   _________________________________________________
-  |                                                 |
-  |    class Name: manager                          |
-  |                                                 |
-  |  Responsibilies:                                |
-  |        convert db contents into comparable form |                 
-  |        provide event for db update/insert       |
+           |                     insert entry    |<--(id,entry)-----------|
+       |---|                     update entry    |<--(id,entry)-----------|
+       |   |                     delete entry    |                        |
+       |   |                     list tables     |                        |
+       |   |                     list entries    |--->list of tuples----| |
+       |   |_____________________________________|                      | |
+       |                                                                | |
+       |                                                                | |
+       |   _______________________________________                      | |
+       |   |                                     |                      | |
+       |   |  class Name: Form                   |                      | |
+       |   |                                     |                      | |
+       |---|  Responsibilities: UI creation      |                      | |
+       |   |                    onscreen update  |                      | |
+       |   |       display db contents on screen |                      | |
+       |   |             provide an updated list |--->dictionary--|     | |
+       |   |                        event driver |                |     | |
+       |   |_____________________________________|                |     | |
+ init  |                                                          |     | |
+       V                                                          |     | |
+   _________________________________________________              |     | |
+  |                                                 |             |     | |
+  |    class Name: manager                          |             |     | |
+  |                                                 |             |     | |
+  |  Responsibilies:                                |             |     | |
+  |        convert db contents into comparable form |-------------|-----  |              
+  |        provide event for db update/insert       |-------------|-------|
   |                                                 |
   |_________________________________________________|
 
