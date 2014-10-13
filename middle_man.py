@@ -16,21 +16,34 @@ class manager:
 		
 		stuff = self.gui.generate_content()
 		print "manager debug : %s " %stuff
-		for i,j in enumerate(self.inner_list):
-			if j != stuff[i]:
-				print "entered desired loop on %s %s " %(j,stuff[i])
+		for i in self.inner_list:
+			if self.inner_list[i] != stuff[i]:
+				print "entered desired loop on %s %s " %(self.inner_list[i],stuff[i])
 				self.db_obj.update(i,stuff[i])
 
-		if len(stuff)> len(self.inner_list):
-			for i in range(len(self.inner_list),len (stuff)):
-				self.db_obj.insert(stuff[i])
+		# check for new members
+		set_gui = set(stuff.keys())
+		set_db = set(self.inner_list.keys())
+	
+		assert len(set_gui) >= len(set_db)
+		for i in (set_gui - set_db):
+			self.db_obj.insert(i,stuff[i])
+
 		self.inner_list = self.db_special()
 
+
 	def db_special(self):
+
+		"""
+			do i need this after refactoring ? we'll se
+			
+			I do need this because of the retarded format of the db_output
+		"""
+
 		temp =  self.db_obj.list_contents()
-		stuff = []
+		stuff = {}
 		for i in temp:
-			stuff.append(i[1])
+			stuff[i[0]]=i[1]
 		return stuff
 
 
