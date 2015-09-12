@@ -56,6 +56,8 @@ class file_stuff(object):
 		os.chdir(egg)
 		rmtree(self.name)
 
+
+
 class database_avatar(object):
 
 	'''
