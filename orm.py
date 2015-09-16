@@ -22,7 +22,7 @@ commandDictionary = {
 
 listOfCommandDicts      = [commandDictionary, tableLevelCommands]
 allowedCommands         = reduce(operator.concat,[x.keys() for x in listOfCommandDicts],[])
-entireCommandDictionary = reduce(lambda x,y:x.update(y) or x,[listOfCommandDicts],{})
+entireCommandDictionary = reduce(lambda x,y:x.update(y) or x,listOfCommandDicts,{})
 
 
 def getCursor(path):
