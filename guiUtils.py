@@ -1,12 +1,9 @@
-import sys # just for testing purpose, not for the module itself
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 
 class Form(QDialog):
-
 	def __init__(self,parent=None):
-
 		self.inner_list = {}
 		self.external_function = None
 
@@ -100,25 +97,4 @@ class Form(QDialog):
 		return trial_no
 
 
-def test_function():
-	assert form.generate_content()[0] == "homer"
-	print "passed assertion"
-	print "end of test"
-
-
-if __name__=='__main__':
-
-	print " Gui testing starts now"
-	app = QApplication(sys.argv)
-	form = Form()
-
-	form.populate({0:"fuck",1:"non-programmers",2:"machines",3:"rule"})
-
-	form.set_external_function(test_function)
-
-	print "please update 0 to 'homer' "
-
-	 
-	form.show()
-	app.exec_()
 
